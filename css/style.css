@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, Verdana, sans-serif;
+
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url('../fonts/Poppins/Poppins-Regular.ttf') format('opentype');
+}
+
+#cadastro {
+    background-color: #0E962D;
+    width: 85%;
+    margin: 5% auto;
+    border-radius: 0 10px 0 10px;
+    padding: 6%;
+}
