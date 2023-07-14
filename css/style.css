@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Poppins, Verdana, sans-serif;
+    font-family:Inter, Poppins, Verdana, sans-serif;
 
 }
 
@@ -10,11 +10,85 @@
     font-family: Poppins;
     src: url('../fonts/Poppins/Poppins-Regular.ttf') format('opentype');
 }
+@font-face {
+    font-family: Inter;
+    src: url('../fonts/Inter/static/Inter-Regular.ttf') format('opentype');
+}
+@font-face {
+    font-family: Inter-Light;
+    src: url('../fonts/Inter/static/Inter-Light.ttf') format('opentype');
+}
 
 #cadastro {
     background-color: #0E962D;
     width: 85%;
     margin: 5% auto;
-    border-radius: 0 10px 0 10px;
+    border-radius: 0 1.5rem 0 1.5rem;
     padding: 6%;
+}
+
+#totalCompra{
+    color: white;
+    font-family: Inter-Light;
+    font-weight: 300;
+    font-size: 3rem;
+    text-align: center;
+    width: 100%;
+   margin-bottom: 1.2rem;
+}
+#totalCompra span{
+    font-size: 4rem;
+}
+.campo{
+    border-radius: .2rem;
+    border: none;
+    padding: .6rem;
+    margin: .5vh;
+}
+#campos{
+    
+}
+#txtProduto{
+    width: 100%;
+}
+#txtPreco{
+    width: 35%;
+}
+#qtd{
+    width: 25%;
+}
+#subtotal{
+    display: inline-block;
+    color: white;
+    margin-left: 6%;
+    font-weight: 100;
+    font-size: 1.4rem;
+
+}
+
+#btnAdicionar{
+    width: 100%;
+    font-size: 1rem;
+    background-color:#44040A ;
+    color: white;
+}
+#listaProdutos{
+    padding: 1.1rem;
+    background-color: red;
+    
+}
+#listaProdutos table{
+    margin: auto;
+    border-collapse: collapse;
+}
+#listaProdutos th{
+    font-size: 3vw; padding: 5rem;
+    background-color: #0E962D;
+    text-align: left;
+    padding: .3rem 1rem 1rem 0;
+}
+#listaProdutos td{
+    font-size: 3.5vw;
+    padding: .2rem;
+    border-top: 1px solid black;
 }
