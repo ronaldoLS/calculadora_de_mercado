@@ -1,57 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <!--icones font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Calculadora de Mercado</title>
 </head>
+
 <body>
+    <div id="conteiner">
+        <section id="cadastro">
+            <h1 id="totalCompra"><span id="euros">€ 0</span>,<span id="centavos">00</span></h1>
+            <article id="campos">
+                <input id="txtProduto" class="campo" type="text" placeholder="Produto" maxlength="80">
+                <input onkeyup="mostrarSubtotal()" id="txtPreco" class="campo" type="number" placeholder="Preço/Uni." >
+                <input onkeyup="mostrarSubtotal()" id="quantidade" class="campo" type="number" placeholder="Qtd.">
+                <h4 id="subtotal">€ 0,00</h4>
+                <button id="btnAdicionar" class="campo">Adicionar</button>
+            </article>
+        </section>
 
-    <div id="cadastro">
-        <h1 id="totalCompra"><span>€ 0,</span>00</h1>
-        <div id="campos">
-            <input id="txtProduto" class="campo" type="text" placeholder="Produto">
-            <input id="txtPreco" class="campo" type="number" placeholder="Preço/Uni.">
-            <input id="qtd" class="campo" type="number" placeholder="Qtd">
-            <h3 id="subtotal" >€ 0,00</h3>
-            <button id="btnAdicionar" class="campo" >Adicionar</button>
-        </div>
+        <ol reversed id="listaProdutos">    
+        </ol>
     </div>
 
-    <div id="listaProdutos">
-        <table>
-            <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Preço/Uni.</th>
-                    <th>Qtd.</th>
-                    <th>subtotal</th>
-                </tr>
-                
-            </thead>
-            <tbody>
-                <tr id="produto1">
-                    <td class="produto">Pao de forma do mercado</td>
-                    <td class="preco">€ 1,80</td>
-                    <td class="quantidade">3</td>
-                    <td class="subtotal">€ 3,40</td>
-                </tr>
-                <tr id="produto1">
-                    <td class="produto">Pao de forma do mercado</td>
-                    <td class="preco">€ 1,80</td>
-                    <td class="quantidade">3</td>
-                    <td class="subtotal">€ 3,40</td>
-                </tr>
-                <tr id="produto1">
-                    <td class="produto">Pao de forma do mercado</td>
-                    <td class="preco">€ 1,80</td>
-                    <td class="quantidade">3</td>
-                    <td class="subtotal">€ 3,40</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
+    <script src="js/script.js"></script>
 </body>
+
 </html>

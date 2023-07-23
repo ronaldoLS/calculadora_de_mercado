@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:Inter, Poppins, Verdana, sans-serif;
+    font-family: Inter, Poppins, Verdana, sans-serif;
 
 }
 
@@ -10,15 +10,24 @@
     font-family: Poppins;
     src: url('../fonts/Poppins/Poppins-Regular.ttf') format('opentype');
 }
+
 @font-face {
     font-family: Inter;
     src: url('../fonts/Inter/static/Inter-Regular.ttf') format('opentype');
 }
+
 @font-face {
     font-family: Inter-Light;
     src: url('../fonts/Inter/static/Inter-Light.ttf') format('opentype');
 }
-
+body{
+    background-color: #cdfed8;
+}
+#conteiner{
+    max-width: 650px;
+    min-width: 350px;
+    margin: auto;
+}
 #cadastro {
     background-color: #0E962D;
     width: 85%;
@@ -27,68 +36,109 @@
     padding: 6%;
 }
 
-#totalCompra{
+#totalCompra {
     color: white;
     font-family: Inter-Light;
     font-weight: 300;
     font-size: 3rem;
     text-align: center;
     width: 100%;
-   margin-bottom: 1.2rem;
+    margin-bottom: 1.2rem;
 }
-#totalCompra span{
+
+#euros {
     font-size: 4rem;
 }
-.campo{
+
+.campo {
     border-radius: .2rem;
     border: none;
     padding: .6rem;
     margin: .5vh;
+    font-size: .9rem;
 }
-#campos{
-    
-}
-#txtProduto{
+
+#campos {}
+
+#txtProduto {
     width: 100%;
 }
-#txtPreco{
-    width: 35%;
+
+#txtPreco {
+    width: 38%;
 }
-#qtd{
-    width: 25%;
+
+#quantidade {
+    width: 23%;
 }
-#subtotal{
+
+/* Chrome/Opera/Safari */
+::-webkit-input-placeholder {
+    color: green;
+  }
+  /* Firefox 19+ */
+  ::-moz-placeholder {
+    color: green;
+  }
+  /* IE 10+ */
+  :-ms-input-placeholder {
+    color: green;
+  }
+  /* Firefox 18- */
+  :-moz-placeholder {
+    color: green;
+  }
+
+#subtotal {
     display: inline-block;
     color: white;
-    margin-left: 6%;
+    margin-left: 2%;
     font-weight: 100;
     font-size: 1.4rem;
 
 }
 
-#btnAdicionar{
+#btnAdicionar {
     width: 100%;
     font-size: 1rem;
-    background-color:#44040A ;
+    background-color: #44040A;
     color: white;
+    cursor: pointer;
 }
-#listaProdutos{
-    padding: 1.1rem;
-    background-color: red;
+
+#listaProdutos {
+    padding: 2rem;
+    color: #44040A;
+    list-style-type: decimal;
     
 }
-#listaProdutos table{
-    margin: auto;
-    border-collapse: collapse;
+
+.produto {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid black;
+    margin-bottom: 1rem;
 }
-#listaProdutos th{
-    font-size: 3vw; padding: 5rem;
-    background-color: #0E962D;
-    text-align: left;
-    padding: .3rem 1rem 1rem 0;
+a{
+    color: #44040A;
+    text-decoration: none;
+
 }
-#listaProdutos td{
-    font-size: 3.5vw;
-    padding: .2rem;
-    border-top: 1px solid black;
+.descricaoProduto {
+    font-size: 1.3rem;
+    margin-bottom: .5rem;
+}
+
+.detalhe {
+    display: inline-block;
+    margin: 0 .8rem;
+    /* display: none; */
+}
+.btnDeletar{
+    float: right;
+    padding-top: 10px;
+    cursor: pointer;
+}
+.subTitulo {
+    font-size: .9rem;
+    font-weight: 500;
 }
