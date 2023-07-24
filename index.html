@@ -16,15 +16,19 @@
             <h1 id="totalCompra"><span id="euros">€ 0</span>,<span id="centavos">00</span></h1>
             <article id="campos">
                 <input id="txtProduto" class="campo" type="text" placeholder="Produto" maxlength="80">
-                <input onkeyup="mostrarSubtotal()" id="txtPreco" class="campo" type="number" placeholder="Preço/Uni." >
-                <input onkeyup="mostrarSubtotal()" id="quantidade" class="campo" type="number" placeholder="Qtd.">
+                <input onkeyup="calcularSubtotal()" id="txtPreco" class="campo" type="number" placeholder="Preço/Uni." >
+                <button onclick="menosQuantidade()" id="menos" class="btnQtdMaisMenos campo">-</button>
+                <input onkeyup="calcularSubtotal()" id="quantidade" class="campo marginNegativa" type="number" placeholder="Qtd.">
+                <button onclick="maisQuantidade()" id="mais" class="btnQtdMaisMenos campo">+</button>
                 <h4 id="subtotal">€ 0,00</h4>
                 <button id="btnAdicionar" class="campo">Adicionar</button>
             </article>
         </section>
 
-        <ol reversed id="listaProdutos">    
+        <ol reversed id="listaProdutos">   
+             
         </ol>
+        <button onclick="apagarTudo()" id="btnApagarTudo" class="campo">pagar tudo</button>
     </div>
 
     <script src="js/script.js"></script>

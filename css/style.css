@@ -24,8 +24,8 @@ body{
     background-color: #cdfed8;
 }
 #conteiner{
-    max-width: 650px;
-    min-width: 350px;
+    max-width: 700px;
+    min-width: 400px;
     margin: auto;
 }
 #cadastro {
@@ -55,7 +55,7 @@ body{
     border: none;
     padding: .6rem;
     margin: .5vh;
-    font-size: .9rem;
+    font-size: 1rem;
 }
 
 #campos {}
@@ -65,11 +65,19 @@ body{
 }
 
 #txtPreco {
-    width: 38%;
+    width: 29.5%;
 }
-
+.marginNegativa {
+    margin: 0px -0.4rem;
+}
+.btnQtdMaisMenos{
+    border: none;
+    color: white;
+    background-color: #44040A;
+    
+}
 #quantidade {
-    width: 23%;
+    width: 17%;
 }
 
 /* Chrome/Opera/Safari */
@@ -94,7 +102,7 @@ body{
     color: white;
     margin-left: 2%;
     font-weight: 100;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 
 }
 
@@ -105,9 +113,20 @@ body{
     color: white;
     cursor: pointer;
 }
+#btnApagarTudo {
+    width: 80%;
+    margin-left: 10%;
+    font-size: 1rem;
+    background-color: #059926;
+    color: white;
+    cursor: pointer;
+    padding: .6rem;
+    text-transform: uppercase;
+}
 
 #listaProdutos {
     padding: 2rem;
+    padding-left: 3rem;
     color: #44040A;
     list-style-type: decimal;
     

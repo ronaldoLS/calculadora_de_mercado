@@ -25,53 +25,74 @@ btnAdicionar.addEventListener('click', (evento) => {
         produto.nome = inputProduto.value.trim();
         produto.preco = inputPreco.value.trim();
         produto.quantidade = inputQuantidade.value.trim();
-        if (indexEditar == -1)
+        if (indexEditar == -1) {
             produtos.unshift(produto);
+            limparCampos();
+        }
 
         else {
-            console.log(produtos[indexEditar]);
-            console.log(inputProduto.value);
             produtos[indexEditar] = produto;
             btnAdicionar.innerHTML = "Adicionar";
             indexEditar = -1;
+            limparCampos();
         }
 
-    }/*  else {
-        produtos.unshift({
-            nome: "test",
-            preco: "1.3",
-            quantidade: "2"
-        });
-    } */
+    }
     mostarProdutos();
-    inputProduto.value = inputPreco.value = inputQuantidade.value = "";
-    h4Subtotal.innerHTML = "€ 0,00";
     armazernarLista();
 });
+
+function limparCampos() {
+    inputProduto.value = inputPreco.value = "";
+    inputQuantidade.value = 1;
+    h4Subtotal.innerHTML = "€ 0,00";
+}
 
 function editarProduto(index) {
     inputProduto.value = produtos[index].nome;
     inputPreco.value = produtos[index].preco;
     inputQuantidade.value = produtos[index].quantidade;
+    let subtotal = produtos[index].preco * produtos[index].quantidade;
+    mostrarSubtotal(subtotal);
     btnAdicionar.innerHTML = "Atualizar";
     indexEditar = index;
 }
 
 function apagarProduto(index) {
     produtos.splice(index, 1);
+    armazernarLista();
     mostarProdutos();
 }
 
-function validarInputPreco() {
-
-    inputPreco.value = 0.04;
+function apagarTudo(){
+    produtos = [];
+    armazernarLista();
+    mostarProdutos();
 }
 
-function mostrarSubtotal() {
-    let subtotal = inputPreco.value * inputQuantidade.value;
+function maisQuantidade() {
+    let qtd = parseInt(inputQuantidade.value);
+    if (qtd < 99)
+        inputQuantidade.value = qtd + 1;
+    calcularSubtotal()
+}
+function menosQuantidade() {
+    let qtd = parseInt(inputQuantidade.value);
+    if (qtd > 1)
+        inputQuantidade.value = qtd - 1;
+    calcularSubtotal()
+}
 
-    if (subtotal >= 0)
-        h4Subtotal.innerHTML = "€ " + subtotal.toFixed(2).replace("/\./g", ",");
+function calcularSubtotal() {
+    let subtotal = inputPreco.value * inputQuantidade.value;
+    mostrarSubtotal(subtotal);
+}
+
+function mostrarSubtotal(subtotal) {
+    subtotal = "€ " + subtotal.toFixed(2).replace(".", ",");
+    // calcula e defeine o tamanho da font conforme o tamanho da string
+    h4Subtotal.style.fontSize = ((6 * 1.3) / subtotal.length) + "rem";
+    h4Subtotal.innerHTML = subtotal;
 }
 
 function calcularTotal() {
@@ -94,6 +115,7 @@ function mostrarTotal() {
 function mostarProdutos() {
     olListaProdutos.innerHTML = "";
     produtos.forEach((p, index) => {
+
         olListaProdutos.innerHTML += `
         <!-- produto${index} -->
             <li id="produto${index}" class="produto">
@@ -101,15 +123,15 @@ function mostarProdutos() {
                     <h2 class="descricaoProduto" >${p.nome}</h2>
                     <div class="detalhe">
                         <h4 class="subTitulo">Preço/Uni.</h4>
-                        <p class="preco">€ ${p.preco}</p>
+                        <p class="preco">€ ${p.preco.replace(".",",")}</p>
                     </div>
                     <div class="detalhe">
                         <h4 class="subTitulo">Qtd.</h4>
-                        <p class="quantidade">${p.quantidade}</p>
+                        <p class="quantidade">${p.quantidade.replace(".",",")}</p>
                     </div>
                     <div class="detalhe">
                         <h4 class="subTitulo">subtotal</h4>
-                        <p class="subtotal">€ ${(p.preco * p.quantidade).toFixed(2)}</p>
+                        <p class="subtotal">€ ${(p.preco * p.quantidade).toFixed(2).replace(".",",")}</p>
                     </div>
                 </a>
                 <div class="detalhe btnDeletar" onclick="apagarProduto(${index})">
@@ -129,12 +151,13 @@ function armazernarLista() {
 
 function recuperarLista() {
     let produtosJSON = localStorage.getItem("produtosJSON");
-    if(produtosJSON)
+    if (produtosJSON)
         produtos = JSON.parse(produtosJSON);
 
-    
+
 }
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
     recuperarLista();
     mostarProdutos();
-} );
+    inputQuantidade.value = 1;
+});
