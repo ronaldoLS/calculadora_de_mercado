@@ -12,13 +12,13 @@
 
 <body>
     <div id="conteiner">
-        <section id="cadastro">
+        <section id="cadastro" onkeypress="verificaTecla(event)">
             <h1 id="totalCompra"><span id="euros">€ 0</span>,<span id="centavos">00</span></h1>
             <article id="campos">
                 <input id="txtProduto" class="campo" type="text" placeholder="Produto" maxlength="80">
-                <input onkeyup="calcularSubtotal()" id="txtPreco" class="campo" type="number" placeholder="Preço/Uni." >
+                <input onkeyup="calcularSubtotal()" id="txtPreco" class="campo" type="text" placeholder="Preço" inputmode="numeric" maxlength="8">
                 <button onclick="menosQuantidade()" id="menos" class="btnQtdMaisMenos campo">-</button>
-                <input onkeyup="calcularSubtotal()" id="quantidade" class="campo marginNegativa" type="number" placeholder="Qtd.">
+                <input onkeyup="calcularSubtotal()" id="quantidade" class="campo marginNegativa" type="text" inputmode="numeric" placeholder="Qtd." maxlength="3">
                 <button onclick="maisQuantidade()" id="mais" class="btnQtdMaisMenos campo">+</button>
                 <h4 id="subtotal">€ 0,00</h4>
                 <button id="btnAdicionar" class="campo">Adicionar</button>

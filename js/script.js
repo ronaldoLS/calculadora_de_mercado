@@ -6,9 +6,24 @@ const inputQuantidade = document.getElementById("quantidade");
 const spanEuros = document.getElementById("euros");
 const spanCentavos = document.getElementById("centavos");
 const h4Subtotal = document.getElementById("subtotal");
+const enter = 13;
 let produtos = [];
 let indexEditar = -1;
+var flagQuantidade = false;
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    recuperarLista();
+    mostarProdutos();
+
+});
+
+btnAdicionar.addEventListener('click', adicionarProduto);
+
+function verificaTecla(event) {
+    if (event.keyCode == enter)
+        adicionarProduto();
+}
 
 function inputsPreenchidos() {
     return inputProduto.value != "" && inputPreco.value != "" && inputQuantidade.value != ""
@@ -18,13 +33,64 @@ function temEsteProduto() {
     return produtos.some(p => p.nome === inputProduto.value)
 }
 
+function limparCampos() {
+    inputProduto.value = inputPreco.value = "";
+    flagQuantidade = false;
+    inputQuantidade.value = "";
+    h4Subtotal.innerHTML = "€ 0,00";
+}
 
-btnAdicionar.addEventListener('click', (evento) => {
+function mostarProdutos() {
+    olListaProdutos.innerHTML = "";
+    produtos.forEach((p, index) => {
+        var preco = p.preco;
+        var quantidade = ("" + p.quantidade).replace(".", ",");
+        var subtotal = p.preco * p.quantidade;
+        subtotal = subtotal.toFixed(2).replace(".", ",");
+
+        preco = p.preco.toLocaleString('pt-GB', { style: 'currency', currency: 'EUR' });
+
+        olListaProdutos.innerHTML += `
+        <!-- produto${index} -->
+            <li id="produto${index}" class="produto">
+                <a href="#" onclick="editarProduto(${index})">
+                    <h2 class="descricaoProduto" >${p.nome}</h2>
+                    <div class="detalhe">
+                        <h4 class="subTitulo">Preço/Uni.</h4>
+                        <p class="preco">${preco}</p>
+                    </div>
+                    <div class="detalhe">
+                        <h4 class="subTitulo">Qtd.</h4>
+                        <p class="quantidade">${quantidade}</p>
+                    </div>
+                    <div class="detalhe">
+                        <h4 class="subTitulo">subtotal</h4>
+                        <p class="subtotal">€ ${subtotal}</p>
+                    </div>
+                </a>
+                <div class="detalhe btnDeletar" onclick="apagarProduto(${index})">
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+            </li>
+        `;
+    });
+
+    mostrarTotal();
+}
+
+function adicionarProduto() {
     let produto = {};
     if (inputsPreenchidos()) {
         produto.nome = inputProduto.value.trim();
-        produto.preco = inputPreco.value.trim();
-        produto.quantidade = inputQuantidade.value.trim();
+
+        produto.preco = inputPreco.value.replace("€ ", "");
+        produto.preco = produto.preco.replace(",", ".");
+        produto.preco = parseFloat(produto.preco);
+
+
+        produto.quantidade = inputQuantidade.value.replace(",", ".");
+        produto.quantidade = parseFloat(produto.quantidade);
+
         if (indexEditar == -1) {
             produtos.unshift(produto);
             limparCampos();
@@ -38,20 +104,16 @@ btnAdicionar.addEventListener('click', (evento) => {
         }
 
     }
+
     mostarProdutos();
     armazernarLista();
-});
-
-function limparCampos() {
-    inputProduto.value = inputPreco.value = "";
-    inputQuantidade.value = 1;
-    h4Subtotal.innerHTML = "€ 0,00";
 }
 
 function editarProduto(index) {
     inputProduto.value = produtos[index].nome;
-    inputPreco.value = produtos[index].preco;
-    inputQuantidade.value = produtos[index].quantidade;
+    inputPreco.value = produtos[index].preco.toLocaleString('pt-GB', { style: 'currency', currency: 'EUR' });
+    inputQuantidade.value = ("" + produtos[index].quantidade).replace(".", ",");
+    flagQuantidade = true;
     let subtotal = produtos[index].preco * produtos[index].quantidade;
     mostrarSubtotal(subtotal);
     btnAdicionar.innerHTML = "Atualizar";
@@ -64,41 +126,67 @@ function apagarProduto(index) {
     mostarProdutos();
 }
 
-function apagarTudo(){
+function apagarTudo() {
     produtos = [];
     armazernarLista();
     mostarProdutos();
 }
 
 function maisQuantidade() {
-    let qtd = parseInt(inputQuantidade.value);
+    let qtd = parseFloat(inputQuantidade.value.replace(",", "."));
     if (qtd < 99)
-        inputQuantidade.value = qtd + 1;
-    calcularSubtotal()
-}
-function menosQuantidade() {
-    let qtd = parseInt(inputQuantidade.value);
-    if (qtd > 1)
-        inputQuantidade.value = qtd - 1;
-    calcularSubtotal()
+        qtd++;
+    inputQuantidade.value = ("" + parseFloat((qtd).toFixed(1))).replace(".", ",");
+    calcularSubtotal();
 }
 
-function calcularSubtotal() {
-    let subtotal = inputPreco.value * inputQuantidade.value;
-    mostrarSubtotal(subtotal);
+function menosQuantidade() {
+    let qtd = parseFloat(inputQuantidade.value.replace(",", "."));
+    if (qtd > 1)
+        qtd--;
+    inputQuantidade.value = ("" + parseFloat((qtd).toFixed(1))).replace(".", ",");
+    calcularSubtotal();
+}
+
+function mostrarpreco() {
+    var valor = validarPreco();
+    inputPreco.value = valor.toLocaleString('pt-GB', { style: 'currency', currency: 'EUR' });
+    return valor;
+}
+
+function validarPreco() {
+    var valor = inputPreco.value.replace(/\D/g, '');
+    valor = parseInt(valor);
+    valor = valor >= 0 ? valor : 0;
+    valor = valor / 100;
+
+    return valor;
 }
 
 function mostrarSubtotal(subtotal) {
     subtotal = "€ " + subtotal.toFixed(2).replace(".", ",");
-    // calcula e defeine o tamanho da font conforme o tamanho da string
-    h4Subtotal.style.fontSize = ((6 * 1.3) / subtotal.length) + "rem";
     h4Subtotal.innerHTML = subtotal;
+}
+
+function calcularSubtotal() {
+    var preco = mostrarpreco();
+    var quantidade = parseFloat(inputQuantidade.value.replace(",", "."));
+    let subtotal = 0;
+    console.log(quantidade);
+    
+        if (!(quantidade >= 0)) 
+            inputQuantidade.value = 1;
+  
+
+    if (preco > 0 && quantidade > 0)
+        subtotal = preco * quantidade;
+    mostrarSubtotal(subtotal);
 }
 
 function calcularTotal() {
     let soma = 0;
     produtos.forEach(element => {
-        soma += element.preco * element.quantidade
+        soma += parseFloat(element.preco) * parseFloat(element.quantidade);
     });
     return soma;
 }
@@ -108,40 +196,9 @@ function mostrarTotal() {
     let euros = parseInt(total);
     let centavos = (total - euros).toFixed(2);
 
-    spanEuros.innerHTML = "€ " + euros;
+    // formata o valor no formato moeda e apresenta na tela
+    spanEuros.innerHTML = "€ " + (euros > 999 ? (euros / 1000) : euros);
     spanCentavos.innerHTML = centavos.substring(2, 4);
-}
-
-function mostarProdutos() {
-    olListaProdutos.innerHTML = "";
-    produtos.forEach((p, index) => {
-
-        olListaProdutos.innerHTML += `
-        <!-- produto${index} -->
-            <li id="produto${index}" class="produto">
-                <a href="#" onclick="editarProduto(${index})">
-                    <h2 class="descricaoProduto" >${p.nome}</h2>
-                    <div class="detalhe">
-                        <h4 class="subTitulo">Preço/Uni.</h4>
-                        <p class="preco">€ ${p.preco.replace(".",",")}</p>
-                    </div>
-                    <div class="detalhe">
-                        <h4 class="subTitulo">Qtd.</h4>
-                        <p class="quantidade">${p.quantidade.replace(".",",")}</p>
-                    </div>
-                    <div class="detalhe">
-                        <h4 class="subTitulo">subtotal</h4>
-                        <p class="subtotal">€ ${(p.preco * p.quantidade).toFixed(2).replace(".",",")}</p>
-                    </div>
-                </a>
-                <div class="detalhe btnDeletar" onclick="apagarProduto(${index})">
-                    <i class="fa-solid fa-trash-can"></i>
-                </div>
-            </li>
-        `;
-    });
-
-    mostrarTotal();
 }
 
 function armazernarLista() {
@@ -153,11 +210,4 @@ function recuperarLista() {
     let produtosJSON = localStorage.getItem("produtosJSON");
     if (produtosJSON)
         produtos = JSON.parse(produtosJSON);
-
-
 }
-document.addEventListener("DOMContentLoaded", () => {
-    recuperarLista();
-    mostarProdutos();
-    inputQuantidade.value = 1;
-});
