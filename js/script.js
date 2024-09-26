@@ -211,3 +211,4 @@ function recuperarLista() {
     if (produtosJSON)
         produtos = JSON.parse(produtosJSON);
 }
+console.log(localStorage.getItem("produtosJSON"))
